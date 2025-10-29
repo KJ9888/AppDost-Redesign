@@ -164,162 +164,167 @@ const TechBubble = ({ tech, index, isAnyHovered, setAnyHovered }) => {
 
   return (
     <motion.div
-      ref={cardRef}
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-50px" }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{ duration: 0.3 }}
       className="relative group perspective-1000"
-      style={{
-        transform: isHovered
-          ? `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) scale(1.05)`
-          : "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)",
-        transition: "transform 0.3s ease-out",
-      }}
     >
-      <motion.div
-        className="relative flex flex-col items-center justify-center w-32 h-32 gap-3 p-4 overflow-hidden transition-all duration-300 ease-out border-2 md:w-36 md:h-36 rounded-2xl bg-slate-800/40 border-slate-700/50 hover:border-slate-600/70 backdrop-blur-sm hover:shadow-2xl"
-        animate={{
-          y: isHovered ? 0 : [0, -20, 0],
-        }}
-        transition={{
-          y: {
-            duration: 1.5,
-            ease: "easeInOut",
-            repeat: isHovered ? 0 : Infinity,
-            repeatDelay: 0.8,
-            delay: index * 0.1, // Wave effect delay based on index
-          },
+      <div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          transform: isHovered
+            ? `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) scale(1.05)`
+            : "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)",
+          transition: "transform 0.3s ease-out",
         }}
       >
-        {/* Animated background gradient */}
-        <div
-          className="absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-30"
-          style={{
-            background: `radial-gradient(circle at 50% 50%, ${tech.color}, transparent 70%)`,
+        <motion.div
+          className="relative flex flex-col items-center justify-center w-32 h-32 gap-3 p-4 overflow-hidden transition-all duration-300 ease-out border-2 md:w-36 md:h-36 rounded-2xl bg-slate-800/40 border-slate-700/50 hover:border-slate-600/70 backdrop-blur-sm hover:shadow-2xl"
+          animate={{
+            y: isHovered ? 0 : [0, -20, 0],
           }}
-        />
-
-        {/* Icon Container with background */}
-        <div
-          className="relative z-10 flex items-center justify-center w-16 h-16 transition-all duration-300 md:w-20 md:h-20 rounded-xl"
-          style={{
-            backgroundColor: isHovered ? `${tech.color}15` : "transparent",
-            boxShadow: isHovered ? `0 0 25px ${tech.color}30` : "none",
+          transition={{
+            y: {
+              duration: 1.5,
+              ease: "easeInOut",
+              repeat: isHovered ? 0 : Infinity,
+              repeatDelay: 0.8,
+              delay: index * 0.1, // Wave effect delay based on index
+            },
           }}
         >
-          <motion.i
-            className={`${tech.icon} text-4xl md:text-5xl`}
+          {/* Animated background gradient */}
+          <div
+            className="absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-30"
             style={{
-              color: isHovered ? tech.color : isAnyHovered ? "#6b7280" : tech.color,
-            }}
-            animate={{
-              scale: isHovered ? [1, 1.15, 1.1] : isAnyHovered ? 1 : [1, 1.08, 1],
-              opacity: isHovered ? 1 : isAnyHovered ? 0.5 : [0.6, 1, 0.6],
-              filter: isHovered
-                ? `drop-shadow(0 0 8px ${tech.color})`
-                : isAnyHovered
-                ? "brightness(0.5)"
-                : [
-                    `brightness(0.7) drop-shadow(0 0 2px ${tech.color}40)`,
-                    `brightness(1) drop-shadow(0 0 6px ${tech.color}60)`,
-                    `brightness(0.7) drop-shadow(0 0 2px ${tech.color}40)`,
-                  ],
-            }}
-            transition={{
-              duration: isHovered ? 0.5 : 2.5,
-              ease: "easeInOut",
-              repeat: isHovered || isAnyHovered ? 0 : Infinity,
-              repeatDelay: isHovered || isAnyHovered ? 0 : 0.3,
+              background: `radial-gradient(circle at 50% 50%, ${tech.color}, transparent 70%)`,
             }}
           />
-        </div>
 
-        {/* Name */}
-        <span
-          className="relative z-10 text-xs font-semibold text-center transition-all duration-300 ease-out"
-          style={{
-            color: isHovered ? tech.color : "#9ca3af",
-          }}
-        >
-          {tech.name}
-        </span>
+          {/* Icon Container with background */}
+          <div
+            className="relative z-10 flex items-center justify-center w-16 h-16 transition-all duration-300 md:w-20 md:h-20 rounded-xl"
+            style={{
+              backgroundColor: isHovered ? `${tech.color}15` : "transparent",
+              boxShadow: isHovered ? `0 0 25px ${tech.color}30` : "none",
+            }}
+          >
+            <motion.i
+              className={`${tech.icon} text-4xl md:text-5xl`}
+              style={{
+                color: isHovered ? tech.color : isAnyHovered ? "#6b7280" : tech.color,
+              }}
+              animate={{
+                scale: isHovered ? [1, 1.15, 1.1] : isAnyHovered ? 1 : [1, 1.08, 1],
+                opacity: isHovered ? 1 : isAnyHovered ? 0.5 : [0.6, 1, 0.6],
+                filter: isHovered
+                  ? `drop-shadow(0 0 8px ${tech.color})`
+                  : isAnyHovered
+                  ? "brightness(0.5)"
+                  : [
+                      `brightness(0.7) drop-shadow(0 0 2px ${tech.color}40)`,
+                      `brightness(1) drop-shadow(0 0 6px ${tech.color}60)`,
+                      `brightness(0.7) drop-shadow(0 0 2px ${tech.color}40)`,
+                    ],
+              }}
+              transition={{
+                duration: isHovered ? 0.5 : 2.5,
+                ease: "easeInOut",
+                repeat: isHovered || isAnyHovered ? 0 : Infinity,
+                repeatDelay: isHovered || isAnyHovered ? 0 : 0.3,
+              }}
+            />
+          </div>
 
-        {/* Category badge - appears on hover */}
+          {/* Name */}
+          <span
+            className="relative z-10 text-xs font-semibold text-center transition-all duration-300 ease-out"
+            style={{
+              color: isHovered ? tech.color : "#9ca3af",
+            }}
+          >
+            {tech.name}
+          </span>
+
+          {/* Category badge - appears on hover */}
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                className="absolute top-2 right-2 px-2 py-0.5 text-[9px] font-bold rounded-full whitespace-nowrap z-20 backdrop-blur-sm"
+                style={{
+                  backgroundColor: `${tech.color}30`,
+                  color: tech.color,
+                  border: `1px solid ${tech.color}50`,
+                }}
+              >
+                {tech.category}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Sparkle effects on hover */}
+          {isHovered && (
+            <>
+              <motion.div
+                className="absolute w-1 h-1 rounded-full top-2 right-2"
+                style={{ backgroundColor: tech.color }}
+                animate={{
+                  scale: [0, 1, 0],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 1,
+                  repeat: Infinity,
+                  repeatDelay: 0.5,
+                }}
+              />
+              <motion.div
+                className="absolute w-1 h-1 rounded-full bottom-3 left-3"
+                style={{ backgroundColor: tech.color }}
+                animate={{
+                  scale: [0, 1, 0],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 1,
+                  repeat: Infinity,
+                  repeatDelay: 0.3,
+                  delay: 0.2,
+                }}
+              />
+            </>
+          )}
+        </motion.div>
+
+        {/* Enhanced glow effect */}
+        <div
+          className="absolute inset-0 transition-all duration-500 ease-out opacity-0 rounded-2xl blur-2xl group-hover:opacity-60 -z-10 group-hover:scale-110"
+          style={{ backgroundColor: tech.color }}
+        />
+
+        {/* Tooltip */}
         <AnimatePresence>
           {isHovered && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              className="absolute top-2 right-2 px-2 py-0.5 text-[9px] font-bold rounded-full whitespace-nowrap z-20 backdrop-blur-sm"
-              style={{
-                backgroundColor: `${tech.color}30`,
-                color: tech.color,
-                border: `1px solid ${tech.color}50`,
-              }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 px-3 py-1.5 bg-gray-900/95 backdrop-blur-sm border border-white/10 rounded-lg text-xs text-white whitespace-nowrap z-30 pointer-events-none"
             >
-              {tech.category}
+              {tech.description}
+              <div className="absolute w-2 h-2 transform rotate-45 -translate-x-1/2 border-t border-l -top-1 left-1/2 bg-gray-900/95 border-white/10" />
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Sparkle effects on hover */}
-        {isHovered && (
-          <>
-            <motion.div
-              className="absolute w-1 h-1 rounded-full top-2 right-2"
-              style={{ backgroundColor: tech.color }}
-              animate={{
-                scale: [0, 1, 0],
-                opacity: [0, 1, 0],
-              }}
-              transition={{
-                duration: 1,
-                repeat: Infinity,
-                repeatDelay: 0.5,
-              }}
-            />
-            <motion.div
-              className="absolute w-1 h-1 rounded-full bottom-3 left-3"
-              style={{ backgroundColor: tech.color }}
-              animate={{
-                scale: [0, 1, 0],
-                opacity: [0, 1, 0],
-              }}
-              transition={{
-                duration: 1,
-                repeat: Infinity,
-                repeatDelay: 0.3,
-                delay: 0.2,
-              }}
-            />
-          </>
-        )}
-      </motion.div>
-
-      {/* Enhanced glow effect */}
-      <div
-        className="absolute inset-0 transition-all duration-500 ease-out opacity-0 rounded-2xl blur-2xl group-hover:opacity-60 -z-10 group-hover:scale-110"
-        style={{ backgroundColor: tech.color }}
-      />
-
-      {/* Tooltip */}
-      <AnimatePresence>
-        {isHovered && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 px-3 py-1.5 bg-gray-900/95 backdrop-blur-sm border border-white/10 rounded-lg text-xs text-white whitespace-nowrap z-30 pointer-events-none"
-          >
-            {tech.description}
-            <div className="absolute w-2 h-2 transform rotate-45 -translate-x-1/2 border-t border-l -top-1 left-1/2 bg-gray-900/95 border-white/10" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      </div>
     </motion.div>
   );
 };
@@ -405,7 +410,7 @@ const TechStackSection = () => {
                 Technologies We Master
               </span>
               <motion.span
-                className="absolute bottom-0 left-0 w-full h-3 bg-gradient-to-r from-cyan-500/30 to-purple-500/30 blur-sm"
+                className="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-cyan-500/30 to-purple-500/30 blur-sm"
                 animate={{ scaleX: [0.8, 1, 0.8] }}
                 transition={{ duration: 3, repeat: Infinity }}
               />

@@ -34,57 +34,52 @@ const HeroSection = () => {
   }, []);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Animate main title
-      gsap.from(".hero-title", {
-        opacity: 0,
-        y: 50,
-        duration: 0.6,
-        ease: "power2.out",
-        stagger: 0.1,
-      });
+    // Defer GSAP animations slightly to prioritize initial render
+    const timer = setTimeout(() => {
+      const ctx = gsap.context(() => {
+        // Animate main title
+        gsap.from(".hero-title", {
+          opacity: 0,
+          y: 50,
+          duration: 0.6,
+          ease: "power2.out",
+          stagger: 0.1,
+        });
 
-      // Animate subtitle
-      gsap.from(".hero-subtitle", {
-        opacity: 0,
-        y: 30,
-        duration: 0.5,
-        delay: 0.3,
-        ease: "power2.out",
-      });
+        // Animate subtitle
+        gsap.from(".hero-subtitle", {
+          opacity: 0,
+          y: 30,
+          duration: 0.5,
+          delay: 0.3,
+          ease: "power2.out",
+        });
 
-      // Animate buttons
-      gsap.from(".hero-button", {
-        opacity: 0,
-        y: 20,
-        duration: 0.4,
-        delay: 0.5,
-        stagger: 0.1,
-        ease: "power2.out",
-      });
+        // Animate stats
+        gsap.from(".hero-stat", {
+          opacity: 0,
+          scale: 0.8,
+          duration: 0.4,
+          delay: 0.5,
+          stagger: 0.08,
+          ease: "power2.out",
+        });
 
-      // Animate stats
-      gsap.from(".hero-stat", {
-        opacity: 0,
-        scale: 0.8,
-        duration: 0.4,
-        delay: 0.7,
-        stagger: 0.08,
-        ease: "power2.out",
-      });
+        // Animate visual mockup
+        gsap.from(".hero-visual", {
+          opacity: 0,
+          x: 50,
+          scale: 0.95,
+          duration: 0.6,
+          delay: 0.6,
+          ease: "power3.out",
+        });
+      }, containerRef);
 
-      // Animate visual mockup
-      gsap.from(".hero-visual", {
-        opacity: 0,
-        x: 50,
-        scale: 0.95,
-        duration: 0.6,
-        delay: 0.8,
-        ease: "power3.out",
-      });
-    }, containerRef);
+      return () => ctx.revert();
+    }, 100); // Defer by 100ms
 
-    return () => ctx.revert();
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -101,9 +96,9 @@ const HeroSection = () => {
       <div className="absolute delay-1000 rounded-full bottom-20 right-20 w-96 h-96 bg-purple-500/20 blur-3xl animate-pulse" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-3xl" />
 
-      {/* Floating Dots - Independent Movement (No cursor effect) */}
+      {/* Floating Dots - Reduced for better performance */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
             animate={{
