@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code2, Sparkles } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,91 +8,133 @@ gsap.registerPlugin(ScrollTrigger);
 const technologies = [
   {
     name: "React",
-    icon: "⚛️",
+    icon: "fab fa-react",
     color: "#61DAFB",
     category: "Frontend",
     description: "UI Development",
   },
   {
     name: "Node.js",
-    icon: "🟢",
+    icon: "fab fa-node-js",
     color: "#339933",
     category: "Backend",
     description: "Server Runtime",
   },
   {
     name: "Python",
-    icon: "🐍",
+    icon: "fab fa-python",
     color: "#3776AB",
     category: "Backend",
     description: "AI & Data Science",
   },
   {
     name: "MongoDB",
-    icon: "🍃",
+    icon: "fas fa-leaf",
     color: "#47A248",
     category: "Database",
     description: "NoSQL Database",
   },
   {
     name: "AWS",
-    icon: "☁️",
+    icon: "fab fa-aws",
     color: "#FF9900",
     category: "Cloud",
     description: "Cloud Computing",
   },
   {
     name: "Docker",
-    icon: "🐳",
+    icon: "fab fa-docker",
     color: "#2496ED",
     category: "DevOps",
     description: "Containerization",
   },
   {
     name: "TypeScript",
-    icon: "💙",
+    icon: "fas fa-code",
     color: "#3178C6",
     category: "Language",
     description: "Type Safety",
   },
   {
-    name: "Next.js",
-    icon: "▲",
-    color: "#000000",
-    category: "Frontend",
-    description: "React Framework",
-  },
-  {
-    name: "PostgreSQL",
-    icon: "🐘",
-    color: "#4169E1",
-    category: "Database",
-    description: "SQL Database",
-  },
-  {
     name: "GraphQL",
-    icon: "◆",
+    icon: "fas fa-project-diagram",
     color: "#E10098",
     category: "API",
     description: "Query Language",
   },
   {
-    name: "Tailwind",
-    icon: "🎨",
-    color: "#06B6D4",
-    category: "Frontend",
-    description: "CSS Framework",
+    name: "Laravel",
+    icon: "fab fa-laravel",
+    color: "#FF2D20",
+    category: "Backend",
+    description: "PHP Framework",
   },
   {
     name: "Firebase",
-    icon: "🔥",
+    icon: "fas fa-fire",
     color: "#FFCA28",
     category: "Backend",
     description: "BaaS Platform",
   },
+  {
+    name: "HTML5",
+    icon: "fab fa-html5",
+    color: "#E34F26",
+    category: "Frontend",
+    description: "Markup Language",
+  },
+  {
+    name: "CSS3",
+    icon: "fab fa-css3-alt",
+    color: "#1572B6",
+    category: "Frontend",
+    description: "Styling",
+  },
+  {
+    name: "JavaScript",
+    icon: "fab fa-js",
+    color: "#F7DF1E",
+    category: "Language",
+    description: "Programming Language",
+  },
+  {
+    name: "Angular",
+    icon: "fab fa-angular",
+    color: "#DD0031",
+    category: "Frontend",
+    description: "Web Framework",
+  },
+  {
+    name: "Vue.js",
+    icon: "fab fa-vuejs",
+    color: "#4FC08D",
+    category: "Frontend",
+    description: "Progressive Framework",
+  },
+  {
+    name: "Git",
+    icon: "fab fa-git-alt",
+    color: "#F05032",
+    category: "DevOps",
+    description: "Version Control",
+  },
+  {
+    name: "GitHub",
+    icon: "fab fa-github",
+    color: "#6e40c9",
+    category: "DevOps",
+    description: "Code Hosting",
+  },
+  {
+    name: "npm",
+    icon: "fab fa-npm",
+    color: "#CB3837",
+    category: "DevOps",
+    description: "Package Manager",
+  },
 ];
 
-const TechBubble = ({ tech, index }) => {
+const TechBubble = ({ tech, index, isAnyHovered, setAnyHovered }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const cardRef = useRef(null);
@@ -110,59 +151,99 @@ const TechBubble = ({ tech, index }) => {
     setRotation({ x: rotateX, y: rotateY });
   };
 
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    setAnyHovered(true);
+  };
+
   const handleMouseLeave = () => {
     setIsHovered(false);
+    setAnyHovered(false);
     setRotation({ x: 0, y: 0 });
   };
 
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{
-        delay: index * 0.05,
-        duration: 0.5,
-        ease: "easeOut",
-      }}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative cursor-pointer group perspective-1000"
+      className="relative group perspective-1000"
       style={{
         transform: isHovered
-          ? `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) translateY(-10px)`
-          : "none",
+          ? `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) scale(1.05)`
+          : "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)",
         transition: "transform 0.3s ease-out",
       }}
     >
-      <div className="relative flex flex-col items-center justify-center gap-2 overflow-hidden transition-all duration-300 ease-out w-28 h-28 md:w-32 md:h-32 rounded-2xl glass-strong hover:border-white/40 glow-effect hover:shadow-2xl">
+      <motion.div
+        className="relative flex flex-col items-center justify-center w-32 h-32 gap-3 p-4 overflow-hidden transition-all duration-300 ease-out border-2 md:w-36 md:h-36 rounded-2xl bg-slate-800/40 border-slate-700/50 hover:border-slate-600/70 backdrop-blur-sm hover:shadow-2xl"
+        animate={{
+          y: isHovered ? 0 : [0, -20, 0],
+        }}
+        transition={{
+          y: {
+            duration: 1.5,
+            ease: "easeInOut",
+            repeat: isHovered ? 0 : Infinity,
+            repeatDelay: 0.8,
+            delay: index * 0.1, // Wave effect delay based on index
+          },
+        }}
+      >
         {/* Animated background gradient */}
         <div
-          className="absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-20"
+          className="absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-30"
           style={{
             background: `radial-gradient(circle at 50% 50%, ${tech.color}, transparent 70%)`,
           }}
         />
 
-        {/* Icon */}
-        <motion.span
-          className="relative z-10 text-5xl md:text-6xl"
-          animate={{
-            scale: isHovered ? [1, 1.2, 1.1] : 1,
-            rotate: isHovered ? [0, 5, -5, 0] : 0,
-          }}
-          transition={{
-            duration: 0.5,
-            ease: "easeInOut",
+        {/* Icon Container with background */}
+        <div
+          className="relative z-10 flex items-center justify-center w-16 h-16 transition-all duration-300 md:w-20 md:h-20 rounded-xl"
+          style={{
+            backgroundColor: isHovered ? `${tech.color}15` : "transparent",
+            boxShadow: isHovered ? `0 0 25px ${tech.color}30` : "none",
           }}
         >
-          {tech.icon}
-        </motion.span>
+          <motion.i
+            className={`${tech.icon} text-4xl md:text-5xl`}
+            style={{
+              color: isHovered ? tech.color : isAnyHovered ? "#6b7280" : tech.color,
+            }}
+            animate={{
+              scale: isHovered ? [1, 1.15, 1.1] : isAnyHovered ? 1 : [1, 1.08, 1],
+              opacity: isHovered ? 1 : isAnyHovered ? 0.5 : [0.6, 1, 0.6],
+              filter: isHovered
+                ? `drop-shadow(0 0 8px ${tech.color})`
+                : isAnyHovered
+                ? "brightness(0.5)"
+                : [
+                    `brightness(0.7) drop-shadow(0 0 2px ${tech.color}40)`,
+                    `brightness(1) drop-shadow(0 0 6px ${tech.color}60)`,
+                    `brightness(0.7) drop-shadow(0 0 2px ${tech.color}40)`,
+                  ],
+            }}
+            transition={{
+              duration: isHovered ? 0.5 : 2.5,
+              ease: "easeInOut",
+              repeat: isHovered || isAnyHovered ? 0 : Infinity,
+              repeatDelay: isHovered || isAnyHovered ? 0 : 0.3,
+            }}
+          />
+        </div>
 
         {/* Name */}
-        <span className="relative z-10 text-xs font-medium text-gray-400 transition-all duration-300 ease-out group-hover:text-white group-hover:font-bold">
+        <span
+          className="relative z-10 text-xs font-semibold text-center transition-all duration-300 ease-out"
+          style={{
+            color: isHovered ? tech.color : "#9ca3af",
+          }}
+        >
           {tech.name}
         </span>
 
@@ -170,13 +251,14 @@ const TechBubble = ({ tech, index }) => {
         <AnimatePresence>
           {isHovered && (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              className="absolute bottom-2 left-1/2 transform -translate-x-1/2 px-2 py-0.5 text-[10px] font-semibold rounded-full whitespace-nowrap z-20"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              className="absolute top-2 right-2 px-2 py-0.5 text-[9px] font-bold rounded-full whitespace-nowrap z-20 backdrop-blur-sm"
               style={{
-                backgroundColor: tech.color,
-                color: tech.name === "Next.js" ? "#ffffff" : "#000000",
+                backgroundColor: `${tech.color}30`,
+                color: tech.color,
+                border: `1px solid ${tech.color}50`,
               }}
             >
               {tech.category}
@@ -216,7 +298,7 @@ const TechBubble = ({ tech, index }) => {
             />
           </>
         )}
-      </div>
+      </motion.div>
 
       {/* Enhanced glow effect */}
       <div
@@ -245,8 +327,9 @@ const TechBubble = ({ tech, index }) => {
 const TechStackSection = () => {
   const sectionRef = useRef(null);
   const [filter, setFilter] = useState("All");
+  const [isAnyHovered, setAnyHovered] = useState(false);
 
-  const categories = ["All", "Frontend", "Backend", "Database", "Cloud", "DevOps"];
+  const categories = ["All", "Frontend", "Backend", "Database", "Cloud", "DevOps", "Language"];
 
   const filteredTechs =
     filter === "All" ? technologies : technologies.filter((tech) => tech.category === filter);
@@ -302,7 +385,7 @@ const TechStackSection = () => {
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             >
-              <Code2 className="w-5 h-5 text-cyan-400" />
+              <i className="fas fa-code text-cyan-400"></i>
             </motion.div>
             <span className="text-sm font-semibold tracking-wide text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text">
               Our Technology Arsenal
@@ -382,7 +465,13 @@ const TechStackSection = () => {
         >
           <AnimatePresence mode="popLayout">
             {filteredTechs.map((tech, index) => (
-              <TechBubble key={tech.name} tech={tech} index={index} />
+              <TechBubble
+                key={tech.name}
+                tech={tech}
+                index={index}
+                isAnyHovered={isAnyHovered}
+                setAnyHovered={setAnyHovered}
+              />
             ))}
           </AnimatePresence>
         </motion.div>
@@ -401,7 +490,7 @@ const TechStackSection = () => {
             className="inline-flex items-center gap-2 cursor-pointer text-cyan-400 hover:text-cyan-300 group"
             whileHover={{ x: 5 }}
           >
-            <Sparkles className="w-5 h-5 transition-transform group-hover:rotate-12" />
+            <i className="transition-transform fas fa-sparkles group-hover:rotate-12"></i>
             <span className="text-sm font-medium">Constantly expanding our tech arsenal</span>
           </motion.div>
         </motion.div>

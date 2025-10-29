@@ -242,8 +242,10 @@ const ProjectCard = ({ project, index }) => {
   );
 };
 
-const ProjectsSection = () => {
+const ProjectsSection = ({ floatingCTARef }) => {
   const sectionRef = useRef(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [hasShownPopup, setHasShownPopup] = useState(false);
 
   useEffect(() => {
     const titleElement = document.querySelector(".projects-title");
@@ -268,6 +270,52 @@ const ProjectsSection = () => {
       }
     );
   }, []);
+
+  // Scroll-triggered popup
+  useEffect(() => {
+    if (!sectionRef.current || hasShownPopup) return;
+
+    const handleScroll = () => {
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const sectionHeight = rect.height;
+      const viewportHeight = window.innerHeight;
+
+      // Show popup when user scrolls 40% into the section
+      const scrolledIntoSection = viewportHeight - rect.top;
+      const scrollPercentage = (scrolledIntoSection / sectionHeight) * 100;
+
+      if (scrollPercentage > 40 && !hasShownPopup) {
+        setShowPopup(true);
+        setHasShownPopup(true);
+        // Hide the floating button when popup shows
+        if (floatingCTARef?.current) {
+          floatingCTARef.current.hideButton();
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasShownPopup, floatingCTARef]);
+
+  const handleStartProject = () => {
+    setShowPopup(false);
+    // Open the FloatingCTA form
+    if (floatingCTARef?.current) {
+      floatingCTARef.current.openForm();
+    }
+  };
+
+  const handleMaybeLater = () => {
+    setShowPopup(false);
+    // Show the floating button again
+    if (floatingCTARef?.current) {
+      floatingCTARef.current.showButton();
+    }
+  };
 
   return (
     <section ref={sectionRef} className="relative py-12 overflow-hidden md:py-20 bg-slate-900">
@@ -300,31 +348,93 @@ const ProjectsSection = () => {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 gap-8 mb-12 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <ProjectCard key={index} project={project} index={index} />
           ))}
         </div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <p className="mb-6 text-lg text-gray-400">
-            Interested in working with us on your next project?
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 font-semibold text-white transition-all duration-300 rounded-full shadow-lg bg-gradient-to-r from-green-600 to-emerald-600 shadow-green-500/50 hover:shadow-green-500/70"
-          >
-            Start Your Project →
-          </motion.button>
-        </motion.div>
       </div>
+
+      {/* Scroll-Triggered Popup */}
+      {showPopup && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm"
+          onClick={handleMaybeLater}
+        >
+          <motion.div
+            initial={{ scale: 0.8, y: 50, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            exit={{ scale: 0.8, y: 50, opacity: 0 }}
+            transition={{ type: "spring", damping: 20, stiffness: 300 }}
+            className="relative max-w-lg p-8 overflow-hidden border shadow-2xl md:p-10 bg-slate-900/95 border-slate-700/50 rounded-3xl backdrop-blur-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={handleMaybeLater}
+              className="absolute text-gray-400 transition-colors top-4 right-4 hover:text-white"
+            >
+              <i className="text-2xl fas fa-times"></i>
+            </button>
+
+            {/* Decorative gradient border */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
+
+            {/* Animated icon */}
+            <motion.div
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex items-center justify-center w-16 h-16 mx-auto mb-6 shadow-2xl rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-500 shadow-cyan-500/50"
+            >
+              <i className="text-3xl text-white fas fa-rocket"></i>
+            </motion.div>
+
+            {/* Content */}
+            <h3 className="mb-4 text-3xl font-bold text-center text-white md:text-4xl">
+              Ready to Start Your{" "}
+              <span className="text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text">
+                Project?
+              </span>
+            </h3>
+
+            <p className="mb-8 text-center text-gray-400">
+              Let&apos;s bring your vision to life! Get a free consultation and see how we can help
+              transform your ideas into reality.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col gap-4">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full py-4 text-lg font-semibold text-white transition-all duration-300 shadow-2xl bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 hover:from-cyan-500 hover:via-blue-500 hover:to-purple-500 rounded-xl shadow-blue-500/40 hover:shadow-blue-500/60"
+                onClick={handleStartProject}
+              >
+                <i className="mr-2 fas fa-paper-plane"></i>
+                Start Your Project Now
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full py-4 text-lg font-semibold text-white transition-all border-2 bg-slate-800/50 border-slate-600/50 hover:bg-slate-800/70 hover:border-slate-500/70 rounded-xl"
+                onClick={handleMaybeLater}
+              >
+                Maybe Later
+              </motion.button>
+            </div>
+
+            {/* Trust indicator */}
+            <div className="flex items-center justify-center gap-2 mt-6 text-sm text-gray-500">
+              <i className="fas fa-check-circle text-cyan-400"></i>
+              <span>Join 50+ satisfied clients</span>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </section>
   );
 };

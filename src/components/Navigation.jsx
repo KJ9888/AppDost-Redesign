@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
@@ -45,7 +44,7 @@ const Navigation = () => {
             <div className="relative">
               <div className="absolute inset-0 transition-opacity duration-300 opacity-50 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl blur-lg group-hover:opacity-75" />
               <div className="relative flex items-center justify-center w-12 h-12 transition-all duration-300 rounded-xl bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 group-hover:shadow-lg group-hover:shadow-blue-500/50">
-                <Rocket className="text-white w-7 h-7" />
+                <i className="text-2xl text-white fas fa-rocket"></i>
               </div>
             </div>
             <div>
@@ -84,7 +83,11 @@ const Navigation = () => {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2 text-white transition-colors border rounded-lg md:hidden hover:bg-white/10 backdrop-blur-sm border-white/10"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? (
+              <i className="text-xl fas fa-times"></i>
+            ) : (
+              <i className="text-xl fas fa-bars"></i>
+            )}
           </button>
         </div>
       </div>

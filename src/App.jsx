@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Lenis from "lenis";
 import Navigation from "./components/Navigation";
@@ -15,6 +15,7 @@ import FloatingCTA from "./components/FloatingCTA";
 import "./App.css";
 
 function App() {
+  const floatingCTARef = useRef(null);
   useEffect(() => {
     // Initialize Lenis for ultra-smooth and fast scrolling
     const lenis = new Lenis({
@@ -89,7 +90,7 @@ function App() {
         </section>
 
         <section id="projects">
-          <ProjectsSection />
+          <ProjectsSection floatingCTARef={floatingCTARef} />
           <TestimonialsSection />
         </section>
 
@@ -110,7 +111,7 @@ function App() {
       </main>
 
       <Footer />
-      <FloatingCTA />
+      <FloatingCTA ref={floatingCTARef} />
     </div>
   );
 }

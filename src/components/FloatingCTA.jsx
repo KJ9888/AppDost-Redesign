@@ -1,9 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-import { MessageCircle, X, Send } from "lucide-react";
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
 import { Button } from "./ui/button";
+import { Toast } from "./ui/toast";
 
-export default function FloatingCTA() {
+const FloatingCTA = forwardRef((props, ref) => {
   const [open, setOpen] = useState(false);
+  const [hideButton, setHideButton] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [submittedName, setSubmittedName] = useState("");
   const firstFieldRef = useRef(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -14,6 +17,14 @@ export default function FloatingCTA() {
     name: "",
     email: "",
   });
+
+  // Expose open method to parent component
+  useImperativeHandle(ref, () => ({
+    openForm: () => setOpen(true),
+    closeForm: () => setOpen(false),
+    hideButton: () => setHideButton(true),
+    showButton: () => setHideButton(false),
+  }));
 
   useEffect(() => {
     if (open && firstFieldRef.current) {
@@ -65,21 +76,40 @@ export default function FloatingCTA() {
 
     // Form is valid, proceed with submission
     console.log("Form submitted:", formData);
-    // Add your form submission logic here
+
+    // Save name before resetting form
+    setSubmittedName(formData.name);
+
+    // Close the form
+    setOpen(false);
+
+    // Show success toast
+    setShowToast(true);
+
+    // Reset form
+    setFormData({
+      name: "",
+      email: "",
+      message: "",
+    });
+
+    // Add your form submission logic here (API call, etc.)
   };
 
   return (
     <>
-      <button
-        aria-label="Start a project"
-        onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-[150] rounded-full px-5 py-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-2xl shadow-purple-500/40 hover:shadow-purple-500/60 hover:scale-105 active:scale-100 transition-all"
-      >
-        <div className="flex items-center gap-2">
-          <MessageCircle className="w-5 h-5" />
-          <span className="hidden font-semibold sm:inline">Start a Project</span>
-        </div>
-      </button>
+      {!open && !hideButton && (
+        <button
+          aria-label="Start a project"
+          onClick={() => setOpen(true)}
+          className="fixed bottom-6 right-6 z-[150] rounded-full px-5 py-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-2xl shadow-purple-500/40 hover:shadow-purple-500/60 hover:scale-105 active:scale-100 transition-all"
+        >
+          <div className="flex items-center gap-2">
+            <i className="fas fa-comment-dots"></i>
+            <span className="hidden font-semibold sm:inline">Start a Project</span>
+          </div>
+        </button>
+      )}
 
       {open && (
         <div role="dialog" aria-modal="true" className="fixed inset-0 z-[180]">
@@ -94,7 +124,7 @@ export default function FloatingCTA() {
                 aria-label="Close"
                 className="absolute p-2 rounded-lg top-3 right-3 bg-white/10 hover:bg-white/20"
               >
-                <X className="w-4 h-4 text-white" />
+                <i className="text-white fas fa-times"></i>
               </button>
               <h3 className="mb-2 text-2xl font-bold text-white">Tell us about your idea</h3>
               <p className="mb-6 text-gray-400">We usually reply within a few hours.</p>
@@ -152,13 +182,28 @@ export default function FloatingCTA() {
                   className="w-full text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:opacity-95"
                 >
                   Send Message
-                  <Send className="w-4 h-4 ml-2" />
+                  <i className="ml-2 fas fa-paper-plane"></i>
                 </Button>
               </form>
             </div>
           </div>
         </div>
       )}
+
+      {/* Success Toast */}
+      <Toast
+        isVisible={showToast}
+        onClose={() => setShowToast(false)}
+        type="success"
+        title="🎉 Congratulations!"
+        message={`Thank you, ${
+          submittedName || "there"
+        }! Your message has been sent successfully. We'll get back to you soon!`}
+      />
     </>
   );
-}
+});
+
+FloatingCTA.displayName = "FloatingCTA";
+
+export default FloatingCTA;
