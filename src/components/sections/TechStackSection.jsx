@@ -351,7 +351,7 @@ const TechStackSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-16 overflow-hidden md:py-24 bg-slate-900">
+    <section ref={sectionRef} className="relative py-12 overflow-hidden bg-slate-900">
       {/* Enhanced Background */}
       {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.15),transparent_70%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(139,92,246,0.1),transparent_50%)]" />

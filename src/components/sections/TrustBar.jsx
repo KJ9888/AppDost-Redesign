@@ -38,7 +38,7 @@ const companies = [
 
 export default function TrustBar() {
   return (
-    <section className="relative py-12 overflow-hidden md:py-16">
+    <section className="relative py-12 overflow-hidden">
       {/* Background gradient effects - seamless with other sections */}
       <div className="absolute inset-0 bg-slate-900" />
       <div className="absolute inset-0">
@@ -80,7 +80,7 @@ export default function TrustBar() {
           </motion.div>
 
           {/* Sliding Logos Carousel */}
-          <div className="relative py-8 mb-20 overflow-hidden">
+          <div className="relative py-2 mb-4 overflow-hidden">
             {/* Fade edges */}
             <div className="absolute top-0 bottom-0 left-0 z-10 w-32 pointer-events-none bg-gradient-to-r from-slate-950 to-transparent" />
             <div className="absolute top-0 bottom-0 right-0 z-10 w-32 pointer-events-none bg-gradient-to-l from-slate-950 to-transparent" />

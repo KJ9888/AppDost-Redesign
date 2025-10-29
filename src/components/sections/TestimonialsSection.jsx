@@ -41,7 +41,7 @@ export default function TestimonialsSection() {
   const current = useMemo(() => TESTIMONIALS[index], [index]);
 
   return (
-    <section className="relative py-12 overflow-hidden md:py-16 bg-slate-900">
+    <section className="relative py-12 overflow-hidden bg-slate-900">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.1),transparent_50%)]" />
 

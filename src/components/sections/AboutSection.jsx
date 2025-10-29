@@ -98,7 +98,7 @@ const CountUpStat = ({ end, suffix = "", prefix = "", label }) => {
 
 const AboutSection = () => {
   return (
-    <section className="relative py-20 overflow-hidden md:py-24 bg-slate-900">
+    <section className="relative py-12 overflow-hidden bg-slate-900">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.1),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(168,85,247,0.1),transparent_50%)]" />

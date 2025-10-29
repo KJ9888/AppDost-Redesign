@@ -91,7 +91,7 @@ const HeroSection = () => {
     <motion.section
       ref={containerRef}
       style={{ opacity, scale }}
-      className="relative flex items-center justify-center min-h-screen pt-20 overflow-hidden bg-slate-900"
+      className="relative flex items-center justify-center min-h-screen pt-20 pb-12 overflow-hidden bg-slate-900"
     >
       {/* Animated Background Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:64px_64px]" />

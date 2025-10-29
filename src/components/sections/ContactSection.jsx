@@ -70,7 +70,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-16 overflow-hidden md:py-24 bg-slate-900">
+    <section ref={sectionRef} className="relative py-12 overflow-hidden bg-slate-900">
       {/* Enhanced Background Effects */}
       <div className="absolute top-0 left-0 rounded-full w-96 h-96 bg-cyan-500/10 blur-3xl animate-pulse" />
       <div className="absolute bottom-0 right-0 delay-1000 rounded-full w-96 h-96 bg-purple-500/10 blur-3xl animate-pulse" />
@@ -194,11 +194,11 @@ const ContactSection = () => {
             >
               <div className="relative p-8 overflow-hidden border md:p-10 bg-slate-800/40 border-slate-700/50 rounded-2xl backdrop-blur-sm">
                 {/* Decorative gradient */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
 
                 <div className="relative">
                   <div className="flex items-center gap-3 mb-8">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
                       <i className="text-lg text-white fas fa-envelope"></i>
                     </div>
                     <h3 className="text-2xl font-bold text-white md:text-3xl">Send Us a Message</h3>
@@ -273,7 +273,7 @@ const ContactSection = () => {
                       type="submit"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full py-4 text-lg font-semibold text-white transition-all duration-300 shadow-2xl bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 hover:from-cyan-500 hover:via-blue-500 hover:to-purple-500 rounded-xl shadow-blue-500/40 hover:shadow-blue-500/60 group"
+                      className="w-full py-4 text-lg font-semibold text-white transition-all duration-300 shadow-2xl rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 group"
                     >
                       <i className="mr-3 transition-transform fas fa-paper-plane group-hover:translate-x-1 group-hover:-translate-y-1"></i>
                       Send Message

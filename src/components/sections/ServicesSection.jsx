@@ -116,7 +116,7 @@ const ServiceCard = ({ service, index }) => {
 
 const ServicesSection = () => {
   return (
-    <section className="relative py-12 overflow-hidden md:py-20 bg-slate-900">
+    <section className="relative py-12 overflow-hidden bg-slate-900">
       {/* Simplified Background - no animations */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute left-0 rounded-full top-1/4 w-96 h-96 bg-blue-500/10 blur-3xl" />

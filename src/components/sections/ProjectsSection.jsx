@@ -318,7 +318,7 @@ const ProjectsSection = ({ floatingCTARef }) => {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-12 overflow-hidden md:py-20 bg-slate-900">
+    <section ref={sectionRef} className="relative py-12 overflow-hidden bg-slate-900">
       {/* Background */}
       <div className="absolute top-0 right-0 rounded-full w-96 h-96 bg-purple-500/10 blur-3xl" />
       <div className="absolute bottom-0 left-0 rounded-full w-96 h-96 bg-blue-500/10 blur-3xl" />
