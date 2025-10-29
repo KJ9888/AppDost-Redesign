@@ -1,0 +1,164 @@
+import { useEffect, useRef, useState } from "react";
+import { MessageCircle, X, Send } from "lucide-react";
+import { Button } from "./ui/button";
+
+export default function FloatingCTA() {
+  const [open, setOpen] = useState(false);
+  const firstFieldRef = useRef(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+  });
+
+  useEffect(() => {
+    if (open && firstFieldRef.current) {
+      firstFieldRef.current.focus();
+    }
+  }, [open]);
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newErrors = {};
+
+    // Validate name
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    // Validate email
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    // Form is valid, proceed with submission
+    console.log("Form submitted:", formData);
+    // Add your form submission logic here
+  };
+
+  return (
+    <>
+      <button
+        aria-label="Start a project"
+        onClick={() => setOpen(true)}
+        className="fixed bottom-6 right-6 z-[150] rounded-full px-5 py-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-2xl shadow-purple-500/40 hover:shadow-purple-500/60 hover:scale-105 active:scale-100 transition-all"
+      >
+        <div className="flex items-center gap-2">
+          <MessageCircle className="w-5 h-5" />
+          <span className="hidden font-semibold sm:inline">Start a Project</span>
+        </div>
+      </button>
+
+      {open && (
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-[180]">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+          />
+          <div className="absolute inset-0 flex items-end justify-center p-4 sm:items-center">
+            <div className="relative w-full p-6 sm:max-w-lg glass-strong rounded-2xl sm:p-8">
+              <button
+                onClick={() => setOpen(false)}
+                aria-label="Close"
+                className="absolute p-2 rounded-lg top-3 right-3 bg-white/10 hover:bg-white/20"
+              >
+                <X className="w-4 h-4 text-white" />
+              </button>
+              <h3 className="mb-2 text-2xl font-bold text-white">Tell us about your idea</h3>
+              <p className="mb-6 text-gray-400">We usually reply within a few hours.</p>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label className="block mb-2 text-sm text-gray-300">
+                    Your Name <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    ref={firstFieldRef}
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="Jane Doe"
+                    className={`w-full px-4 py-3 text-white placeholder-gray-500 transition-all border rounded-lg bg-white/5 border-white/10 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 ${
+                      errors.name ? "border-red-500 focus:border-red-500 focus:ring-red-500/30" : ""
+                    }`}
+                  />
+                  {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name}</p>}
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm text-gray-300">
+                    Email <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="jane@example.com"
+                    className={`w-full px-4 py-3 text-white placeholder-gray-500 transition-all border rounded-lg bg-white/5 border-white/10 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 ${
+                      errors.email
+                        ? "border-red-500 focus:border-red-500 focus:ring-red-500/30"
+                        : ""
+                    }`}
+                  />
+                  {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email}</p>}
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm text-gray-300">What do you need?</label>
+                  <textarea
+                    rows="4"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Website, mobile app, redesign..."
+                    className="w-full px-4 py-3 text-white placeholder-gray-500 transition-all border rounded-lg resize-none bg-white/5 border-white/10 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/30"
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:opacity-95"
+                >
+                  Send Message
+                  <Send className="w-4 h-4 ml-2" />
+                </Button>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

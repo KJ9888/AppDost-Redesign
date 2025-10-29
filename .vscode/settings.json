@@ -1,0 +1,94 @@
+{
+  // Performance optimizations - File watching and searching
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/dist-ssr": true,
+    "**/.git": true,
+    "**/package-lock.json": true,
+    "**/.vite": true,
+    "**/.cache": true
+  },
+
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.git/**": true,
+    "**/dist/**": true,
+    "**/dist-ssr/**": true,
+    "**/.vite/**": true,
+    "**/.cache/**": true,
+    "**/build/**": true
+  },
+
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true
+  },
+
+  // Disable heavy UI features for better performance
+  "editor.minimap.enabled": false,
+  "editor.codeLens": false,
+  "editor.inlayHints.enabled": "off",
+  "editor.stickyScroll.enabled": false,
+  "breadcrumbs.enabled": true,
+
+  // Editor performance
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.acceptSuggestionOnCommitCharacter": false,
+
+  // TypeScript/JavaScript performance
+  "typescript.tsserver.maxTsServerMemory": 4096,
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "javascript.suggest.enabled": true,
+  "javascript.validate.enable": true,
+
+  // ESLint optimization
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.runtime": "node",
+  "eslint.validate": ["javascript", "javascriptreact"],
+  "eslint.codeActionsOnSave.mode": "problems",
+
+  // Tailwind CSS
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ],
+  "tailwindCSS.emmetCompletions": true,
+  "css.validate": false,
+
+  // Git performance
+  "git.enabled": true,
+  "git.autorefresh": false,
+  "git.autofetch": false,
+  "git.decorations.enabled": true,
+
+  // Terminal
+  "terminal.integrated.gpuAcceleration": "off",
+  "terminal.integrated.enablePersistentSessions": false,
+
+  // Auto save
+  "files.autoSave": "onFocusChange",
+
+  // Disable telemetry
+  "telemetry.telemetryLevel": "off",
+
+  // Emmet
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  }
+}
