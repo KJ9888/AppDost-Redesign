@@ -26,32 +26,47 @@
     "**/.DS_Store": true
   },
 
-  // Disable heavy UI features for better performance
+  // MAXIMUM PERFORMANCE MODE
   "editor.minimap.enabled": false,
   "editor.codeLens": false,
   "editor.inlayHints.enabled": "off",
   "editor.stickyScroll.enabled": false,
+  "editor.renderWhitespace": "none",
+  "editor.renderControlCharacters": false,
+  "editor.renderLineHighlight": "line",
+  "editor.occurrencesHighlight": "off",
+  "editor.selectionHighlight": false,
+  "editor.folding": true,
+  "editor.foldingHighlight": false,
+  "editor.smoothScrolling": false,
+  "editor.cursorSmoothCaretAnimation": "off",
   "breadcrumbs.enabled": true,
 
-  // Editor performance
-  "editor.formatOnSave": true,
+  // Editor performance - FASTER SAVES
+  "editor.formatOnSave": false,
+  "editor.formatOnType": false,
+  "editor.formatOnPaste": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  },
+  "editor.codeActionsOnSave": {},
   "editor.quickSuggestions": {
-    "other": true,
+    "other": "inline",
     "comments": false,
-    "strings": true
+    "strings": false
   },
   "editor.suggestOnTriggerCharacters": true,
   "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.snippetSuggestions": "top",
+  "editor.wordBasedSuggestions": "off",
+  "editor.parameterHints.enabled": true,
 
-  // TypeScript/JavaScript performance
-  "typescript.tsserver.maxTsServerMemory": 4096,
+  // TypeScript/JavaScript performance - TURBO MODE
+  "typescript.tsserver.maxTsServerMemory": 8192,
   "typescript.disableAutomaticTypeAcquisition": true,
   "javascript.suggest.enabled": true,
   "javascript.validate.enable": true,
+  "typescript.surveys.enabled": false,
+  "typescript.updateImportsOnFileMove.enabled": "never",
+  "javascript.updateImportsOnFileMove.enabled": "never",
 
   // ESLint optimization
   "eslint.workingDirectories": [{ "mode": "auto" }],
@@ -70,21 +85,57 @@
   "tailwindCSS.emmetCompletions": true,
   "css.validate": false,
 
-  // Git performance
+  // Git performance - MINIMAL
   "git.enabled": true,
   "git.autorefresh": false,
   "git.autofetch": false,
-  "git.decorations.enabled": true,
+  "git.decorations.enabled": false,
+  "git.showPushSuccessNotification": false,
+  "scm.diffDecorations": "none",
 
-  // Terminal
+  // Terminal - FAST
   "terminal.integrated.gpuAcceleration": "off",
   "terminal.integrated.enablePersistentSessions": false,
+  "terminal.integrated.smoothScrolling": false,
 
-  // Auto save
-  "files.autoSave": "onFocusChange",
+  // Auto save - INSTANT
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 300,
+  "files.trimTrailingWhitespace": false,
+  "files.trimFinalNewlines": false,
+  "files.insertFinalNewline": false,
 
-  // Disable telemetry
+  // Disable heavy extensions features
   "telemetry.telemetryLevel": "off",
+  "workbench.enableExperiments": false,
+  "workbench.settings.enableNaturalLanguageSearch": false,
+  "extensions.autoCheckUpdates": false,
+  "extensions.autoUpdate": false,
+
+  // CRITICAL: Chat/Copilot performance - NO HISTORY SAVING ON CLOSE
+  "github.copilot.chat.saveHistory": false,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "chat.experimental.persistChatEdits": false,
+  
+  // Window performance - INSTANT CLOSE
+  "window.titleBarStyle": "custom",
+  "window.dialogStyle": "custom",
+  "window.enableMenuBarMnemonics": false,
+  "window.restoreWindows": "none",
+  "window.closeWhenEmpty": true,
+  
+  // Workbench performance - LIGHTNING FAST
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.editor.highlightModifiedTabs": false,
+  "workbench.list.smoothScrolling": false,
+  "workbench.tree.indent": 12,
+  "workbench.tree.renderIndentGuides": "none",
+  "workbench.startupEditor": "none",
+  "workbench.editor.restoreViewState": false,
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 5,
+  "workbench.editor.limit.perEditorGroup": true,
 
   // Emmet
   "emmet.triggerExpansionOnTab": true,

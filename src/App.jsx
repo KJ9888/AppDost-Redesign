@@ -1,31 +1,31 @@
-import { useEffect, useRef, lazy, Suspense } from "react";
-import { motion } from "framer-motion";
+import { useEffect, lazy, Suspense } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Lenis from "lenis";
 import Navigation from "./components/Navigation";
-import HeroSection from "./components/sections/HeroSection";
-import TrustBar from "./components/sections/TrustBar";
+import ScrollToTop from "./components/ScrollToTop";
 import "./App.css";
 
-// Lazy load sections that are below the fold
-const ServicesSection = lazy(() => import("./components/sections/ServicesSection"));
-const AboutSection = lazy(() => import("./components/sections/AboutSection"));
-const ProjectsSection = lazy(() => import("./components/sections/ProjectsSection"));
-const TestimonialsSection = lazy(() => import("./components/sections/TestimonialsSection"));
-const TechStackSection = lazy(() => import("./components/sections/TechStackSection"));
-const ContactSection = lazy(() => import("./components/sections/ContactSection"));
+// Lazy load pages
+const HomePage = lazy(() => import("./pages/HomePage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const ServicesPage = lazy(() => import("./pages/ServicesPage"));
+const PortfolioPage = lazy(() => import("./pages/PortfolioPage"));
+const CareersPage = lazy(() => import("./pages/CareersPage"));
+const BlogPage = lazy(() => import("./pages/BlogPage"));
 const Footer = lazy(() => import("./components/Footer"));
 const FloatingCTA = lazy(() => import("./components/FloatingCTA"));
 
 // Loading fallback component
-const SectionLoader = () => (
-  <div className="flex items-center justify-center min-h-[200px]">
-    <div className="w-8 h-8 border-4 border-blue-500 rounded-full border-t-transparent animate-spin"></div>
+const PageLoader = () => (
+  <div className="flex items-center justify-center min-h-screen bg-slate-950">
+    <div className="text-center">
+      <div className="w-16 h-16 mx-auto mb-4 border-4 border-blue-500 rounded-full border-t-transparent animate-spin"></div>
+      <p className="text-gray-400">Loading...</p>
+    </div>
   </div>
 );
 
 function App() {
-  const floatingCTARef = useRef(null);
-
   useEffect(() => {
     // Initialize Lenis with performance-optimized settings
     const lenis = new Lenis({
@@ -46,88 +46,58 @@ function App() {
     requestAnimationFrame(raf);
 
     // Handle anchor links
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener("click", function (e) {
+    const handleAnchorClick = (e) => {
+      const href = e.target.getAttribute("href");
+      if (href && href.startsWith("#")) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute("href"));
+        const target = document.querySelector(href);
         if (target) {
           lenis.scrollTo(target, { offset: -80, duration: 0.6 });
         }
-      });
-    });
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick);
 
     return () => {
       lenis.destroy();
+      document.removeEventListener("click", handleAnchorClick);
     };
   }, []);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-slate-950">
-      {/* Skip to content for accessibility */}
-      <a
-        href="#home"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] bg-white text-slate-900 px-4 py-2 rounded-lg shadow"
-      >
-        Skip to content
-      </a>
-      <Navigation />
+    <Router>
+      <ScrollToTop />
+      <div className="min-h-screen overflow-x-hidden bg-slate-950">
+        {/* Skip to content for accessibility */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] bg-white text-slate-900 px-4 py-2 rounded-lg shadow"
+        >
+          Skip to content
+        </a>
+        
+        <Navigation />
 
-      <main>
-        <section id="home">
-          <HeroSection />
-        </section>
-        <TrustBar />
+        <main id="main-content">
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/portfolio" element={<PortfolioPage />} />
+              <Route path="/careers" element={<CareersPage />} />
+              <Route path="/blog" element={<BlogPage />} />
+            </Routes>
+          </Suspense>
+        </main>
 
-        <Suspense fallback={<SectionLoader />}>
-          <section id="services">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <ServicesSection />
-            </motion.div>
-          </section>
-
-          <section id="about">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <AboutSection />
-            </motion.div>
-          </section>
-
-          <section id="projects">
-            <ProjectsSection floatingCTARef={floatingCTARef} />
-            <TestimonialsSection />
-          </section>
-
-          <section id="tech">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <TechStackSection />
-            </motion.div>
-          </section>
-
-          <section id="contact">
-            <ContactSection />
-          </section>
+        <Suspense fallback={null}>
+          <Footer />
+          <FloatingCTA />
         </Suspense>
-      </main>
-
-      <Suspense fallback={null}>
-        <Footer />
-        <FloatingCTA ref={floatingCTARef} />
-      </Suspense>
-    </div>
+      </div>
+    </Router>
   );
 }
 
