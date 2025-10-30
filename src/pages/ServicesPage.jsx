@@ -109,11 +109,11 @@ const developmentProcess = [
 
 const ServicesPage = () => {
   return (
-    <div className="min-h-screen pt-20 bg-slate-950">
+    <div className="min-h-screen pt-20 bg-slate-900">
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden bg-slate-900">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(6,182,212,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.1),transparent_50%)]" />
 
         <div className="container relative z-10 px-4 mx-auto sm:px-6 lg:px-8">
           <motion.div
@@ -124,7 +124,7 @@ const ServicesPage = () => {
           >
             <h1 className="mb-6 text-5xl font-bold leading-tight text-white md:text-6xl">
               Our{" "}
-              <span className="text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text">
+              <span className="text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400 bg-clip-text">
                 Services
               </span>
             </h1>
@@ -203,7 +203,7 @@ const ServicesPage = () => {
       </section>
 
       {/* Development Process */}
-      <section className="py-16 bg-slate-900/50">
+      <section className="py-16 bg-slate-900">
         <div className="container px-4 mx-auto sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

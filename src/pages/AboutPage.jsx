@@ -17,7 +17,7 @@ import {
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen pt-20 bg-slate-950">
+    <div className="min-h-screen pt-20 bg-slate-900">
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden bg-slate-900">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%)]" />
@@ -59,7 +59,7 @@ const AboutPage = () => {
               Our Mission: Digital Inclusion for All
             </h2>
             <p className="text-lg leading-relaxed text-gray-300">
-              We believe technology should reach every corner of India. That's why we're committed
+              We believe technology should reach every corner of India. That&apos;s why we&apos;re committed
               to providing world-class IT solutions at prices that rural entrepreneurs, schools, and
               startups can afford.
             </p>
@@ -93,7 +93,7 @@ const AboutPage = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -8 }}
-                className="p-8 transition-all duration-300 border bg-slate-800/50 border-purple-500/30 rounded-2xl backdrop-blur-sm hover:bg-slate-800/70 hover:border-purple-400/50"
+                className="p-8 transition-all duration-300 border bg-slate-800/40 border-slate-700/50 rounded-2xl backdrop-blur-sm hover:bg-slate-800/60 hover:border-slate-600/70"
               >
                 <div
                   className={`inline-flex p-4 mb-6 rounded-xl bg-gradient-to-br ${item.color}`}
@@ -109,7 +109,7 @@ const AboutPage = () => {
       </section>
 
       {/* Our Story */}
-      <section className="py-16 bg-slate-900/50">
+      <section className="py-16 bg-slate-900">
         <div className="container px-4 mx-auto sm:px-6 lg:px-8">
           <div className="grid max-w-6xl grid-cols-1 gap-12 mx-auto md:grid-cols-2">
             <motion.div
@@ -132,7 +132,7 @@ const AboutPage = () => {
                   professional technology solutions.
                 </p>
                 <p className="leading-relaxed">
-                  Today, we're proud to serve clients from both urban and rural areas, offering the
+                  Today, we&apos;re proud to serve clients from both urban and rural areas, offering the
                   same quality of service but with pricing models designed to be truly affordable for
                   everyone.
                 </p>
@@ -158,7 +158,7 @@ const AboutPage = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="p-6 text-center border bg-slate-800/50 border-purple-500/30 rounded-xl backdrop-blur-sm"
+                    className="p-6 text-center border bg-slate-800/40 border-slate-700/50 rounded-xl backdrop-blur-sm"
                   >
                     <div className="mb-2 text-4xl font-black text-transparent bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text">
                       {stat.value}
@@ -225,7 +225,7 @@ const AboutPage = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
                 whileHover={{ y: -5 }}
-                className="p-6 transition-all duration-200 border bg-slate-800/40 border-purple-500/30 rounded-xl backdrop-blur-sm hover:bg-slate-800/60 hover:border-purple-400/50"
+                className="p-6 transition-all duration-200 border bg-slate-800/40 border-slate-700/50 rounded-xl backdrop-blur-sm hover:bg-slate-800/60 hover:border-slate-600/70"
               >
                 <value.icon className="w-10 h-10 mb-4 text-purple-400" />
                 <h3 className="mb-3 text-xl font-bold text-white">{value.title}</h3>
@@ -291,7 +291,7 @@ const AboutPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="p-8 border bg-slate-800/50 border-purple-500/30 rounded-2xl backdrop-blur-sm"
+                className="p-8 border bg-slate-800/40 border-slate-700/50 rounded-2xl backdrop-blur-sm"
               >
                 <commitment.icon className="w-12 h-12 mb-6 text-purple-400" />
                 <h3 className="mb-6 text-2xl font-bold text-white">{commitment.title}</h3>
@@ -310,10 +310,10 @@ const AboutPage = () => {
       </section>
 
       {/* Contact Info Footer */}
-      <section className="relative py-20 overflow-hidden bg-slate-900">
+      <section className="relative py-20 overflow-hidden bg-slate-900/10">
         {/* Animated background elements */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(139,92,246,0.1),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_50%,rgba(59,130,246,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 " />
+        <div className="absolute inset-0 " />
         
         <div className="container relative z-10 px-4 mx-auto sm:px-6 lg:px-8">
           <motion.div
@@ -323,38 +323,35 @@ const AboutPage = () => {
             transition={{ duration: 0.6 }}
             className="max-w-5xl mx-auto"
           >
-            {/* Main CTA Card */}
-            <div className="relative p-1 overflow-hidden rounded-3xl bg-gradient-to-br from-purple-500/20 via-blue-500/20 to-pink-500/20">
-              <div className="relative p-8 md:p-12 bg-slate-900/95 rounded-[22px] backdrop-blur-xl">
-                <div className="mb-10 text-center">
-                  <motion.h2 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                    className="mb-4 text-3xl font-bold text-white md:text-4xl lg:text-5xl"
-                  >
-                    Ready to Transform Your Business?
-                  </motion.h2>
-                  <motion.p 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 }}
-                    className="text-lg text-gray-300 md:text-xl"
-                  >
-                    Join hundreds of rural businesses, schools, and startups who are already growing with AppDost
-                  </motion.p>
-                </div>
+            <div className="mb-10 text-center">
+              <motion.h2 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="mb-4 text-3xl font-bold text-white md:text-4xl lg:text-5xl"
+              >
+                Ready to Transform Your Business?
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="text-lg text-gray-300 md:text-xl"
+              >
+                Join hundreds of rural businesses, schools, and startups who are already growing with AppDost
+              </motion.p>
+            </div>
 
-                {/* Contact Information Grid */}
-                <div className="grid grid-cols-1 gap-6 mb-10 md:grid-cols-3">
+            {/* Contact Information Grid */}
+            <div className="grid grid-cols-1 gap-6 mb-10 md:grid-cols-3">
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.4 }}
-                    className="flex flex-col items-center gap-3 p-6 transition-all duration-300 border bg-slate-800/40 border-purple-500/30 rounded-xl backdrop-blur-sm hover:bg-slate-800/60 hover:border-purple-400/50 hover:scale-105"
+                    className="flex flex-col items-center gap-3 p-6 transition-all duration-300 border bg-slate-800/40 border-slate-700/50 rounded-xl backdrop-blur-sm hover:bg-slate-800/60 hover:border-slate-600/70 hover:scale-105"
                   >
                     <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20">
                       <MapPin className="w-6 h-6 text-purple-400" />
@@ -370,7 +367,7 @@ const AboutPage = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.5 }}
-                    className="flex flex-col items-center gap-3 p-6 transition-all duration-300 border bg-slate-800/40 border-blue-500/30 rounded-xl backdrop-blur-sm hover:bg-slate-800/60 hover:border-blue-400/50 hover:scale-105"
+                    className="flex flex-col items-center gap-3 p-6 transition-all duration-300 border bg-slate-800/40 border-slate-700/50 rounded-xl backdrop-blur-sm hover:bg-slate-800/60 hover:border-slate-600/70 hover:scale-105"
                   >
                     <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
                       <Phone className="w-6 h-6 text-blue-400" />
@@ -387,7 +384,7 @@ const AboutPage = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.6 }}
-                    className="flex flex-col items-center gap-3 p-6 transition-all duration-300 border bg-slate-800/40 border-pink-500/30 rounded-xl backdrop-blur-sm hover:bg-slate-800/60 hover:border-pink-400/50 hover:scale-105"
+                    className="flex flex-col items-center gap-3 p-6 transition-all duration-300 border bg-slate-800/40 border-slate-700/50 rounded-xl backdrop-blur-sm hover:bg-slate-800/60 hover:border-slate-600/70 hover:scale-105"
                   >
                     <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-pink-500/20 to-purple-500/20">
                       <Mail className="w-6 h-6 text-pink-400" />
@@ -427,8 +424,6 @@ const AboutPage = () => {
                     </span>
                   </a>
                 </motion.div>
-              </div>
-            </div>
           </motion.div>
         </div>
       </section>

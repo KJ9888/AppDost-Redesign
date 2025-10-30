@@ -134,7 +134,7 @@ const HeroSection = () => {
             >
               <Sparkles className="w-5 h-5 text-yellow-400 animate-pulse" />
               <span className="text-sm font-semibold text-white">
-                ✨ Trusted by 50+ Businesses | Award-Winning Digital Solutions
+                 Trusted by 50+ Businesses | Award-Winning Digital Solutions
               </span>
             </motion.div>
 
@@ -221,7 +221,7 @@ const HeroSection = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1.2 }}
                       >
-                        <div className="text-3xl font-bold text-white">100%</div>
+                        <div className="text-3xl font-bold text-white">99.9%</div>
                         <div className="text-xs text-gray-300">Client Satisfaction Rate</div>
                         <div className="mt-2 h-1.5 bg-white/20 rounded-full overflow-hidden">
                           <motion.div
