@@ -1,0 +1,33 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    // Use the workspace settings tuned for performance
+    "files.watcherExclude": {
+      "**/node_modules/**": true,
+      "**/.git/**": true,
+      "**/dist/**": true,
+      "**/build/**": true,
+      "**/public/temp/**": true,
+      "**/public/temp2/**": true,
+      "**/temp/**": true,
+      "**/tmp/**": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/build": true,
+      "**/dist": true,
+      "**/public/temp/**": true,
+      "**/public/temp2/**": true
+    },
+    "files.exclude": {
+      "**/.git": true
+    },
+    // Reduce workbench load
+    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.value": 6
+  }
+}

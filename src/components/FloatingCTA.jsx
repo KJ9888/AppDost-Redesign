@@ -98,7 +98,7 @@ const FloatingCTA = forwardRef((props, ref) => {
 
   return (
     <>
-      {!open && !hideButton && (
+      {!hideButton && !open && (
         <button
           aria-label="Start a project"
           onClick={() => setOpen(true)}

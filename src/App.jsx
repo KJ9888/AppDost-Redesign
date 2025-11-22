@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect, useRef, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Lenis from "lenis";
 import Navigation from "./components/Navigation";
@@ -26,6 +26,8 @@ const PageLoader = () => (
 );
 
 function App() {
+  const floatingCTARef = useRef(null);
+
   useEffect(() => {
     // Initialize Lenis with performance-optimized settings
     const lenis = new Lenis({
@@ -82,7 +84,7 @@ function App() {
         <main id="main-content">
           <Suspense fallback={<PageLoader />}>
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<HomePage floatingCTARef={floatingCTARef} />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/portfolio" element={<PortfolioPage />} />
@@ -94,7 +96,7 @@ function App() {
 
         <Suspense fallback={null}>
           <Footer />
-          <FloatingCTA />
+          <FloatingCTA ref={floatingCTARef} />
         </Suspense>
       </div>
     </Router>

@@ -17,7 +17,7 @@ const SectionLoader = () => (
   </div>
 );
 
-const HomePage = () => {
+const HomePage = ({ floatingCTARef }) => {
   return (
     <div className="min-h-screen bg-slate-950">
       <section id="home">
@@ -49,7 +49,7 @@ const HomePage = () => {
         </section>
 
         <section id="projects">
-          <ProjectsSection />
+          <ProjectsSection floatingCTARef={floatingCTARef} />
           <TestimonialsSection />
         </section>
 
