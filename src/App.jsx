@@ -31,7 +31,7 @@ function App() {
   useEffect(() => {
     // Initialize Lenis with performance-optimized settings
     const lenis = new Lenis({
-      duration: 1,
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
       smoothTouch: false,
@@ -40,21 +40,28 @@ function App() {
       infinite: false,
     });
 
+    let rafId;
     function raf(time) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
-    // Handle anchor links
+    // Handle anchor links - optimized to prevent layout thrashing
     const handleAnchorClick = (e) => {
-      const href = e.target.getAttribute("href");
+      const target = e.target.closest('a');
+      if (!target) return;
+      
+      const href = target.getAttribute("href");
       if (href && href.startsWith("#")) {
         e.preventDefault();
-        const target = document.querySelector(href);
-        if (target) {
-          lenis.scrollTo(target, { offset: -80, duration: 0.6 });
+        const element = document.querySelector(href);
+        if (element) {
+          // Use requestAnimationFrame to batch DOM reads/writes
+          requestAnimationFrame(() => {
+            lenis.scrollTo(element, { offset: -80, duration: 0.6 });
+          });
         }
       }
     };
@@ -62,13 +69,14 @@ function App() {
     document.addEventListener("click", handleAnchorClick);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
       document.removeEventListener("click", handleAnchorClick);
     };
   }, []);
 
   return (
-    <Router>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <ScrollToTop />
       <div className="min-h-screen overflow-x-hidden bg-slate-950">
         {/* Skip to content for accessibility */}

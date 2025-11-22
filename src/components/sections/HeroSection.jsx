@@ -34,52 +34,39 @@ const HeroSection = () => {
   }, []);
 
   useEffect(() => {
-    // Defer GSAP animations slightly to prioritize initial render
-    const timer = setTimeout(() => {
-      const ctx = gsap.context(() => {
-        // Animate main title
-        gsap.from(".hero-title", {
-          opacity: 0,
-          y: 50,
-          duration: 0.6,
-          ease: "power2.out",
-          stagger: 0.1,
-        });
+    // Simple GSAP animations
+    const ctx = gsap.context(() => {
+      gsap.from(".hero-title", {
+        opacity: 0,
+        y: 20,
+        duration: 0.6,
+        stagger: 0.1,
+      });
 
-        // Animate subtitle
-        gsap.from(".hero-subtitle", {
-          opacity: 0,
-          y: 30,
-          duration: 0.5,
-          delay: 0.3,
-          ease: "power2.out",
-        });
+      gsap.from(".hero-subtitle", {
+        opacity: 0,
+        y: 15,
+        duration: 0.5,
+        delay: 0.2,
+      });
 
-        // Animate stats
-        gsap.from(".hero-stat", {
-          opacity: 0,
-          scale: 0.8,
-          duration: 0.4,
-          delay: 0.5,
-          stagger: 0.08,
-          ease: "power2.out",
-        });
+      gsap.from(".hero-stat", {
+        opacity: 0,
+        scale: 0.95,
+        duration: 0.4,
+        delay: 0.3,
+        stagger: 0.05,
+      });
 
-        // Animate visual mockup
-        gsap.from(".hero-visual", {
-          opacity: 0,
-          x: 50,
-          scale: 0.95,
-          duration: 0.6,
-          delay: 0.6,
-          ease: "power3.out",
-        });
-      }, containerRef);
+      gsap.from(".hero-visual", {
+        opacity: 0,
+        x: 20,
+        duration: 0.6,
+        delay: 0.4,
+      });
+    }, containerRef);
 
-      return () => ctx.revert();
-    }, 100); // Defer by 100ms
-
-    return () => clearTimeout(timer);
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -91,34 +78,12 @@ const HeroSection = () => {
       {/* Animated Background Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:64px_64px]" />
 
-      {/* Gradient Orbs - Subtle Background Glow */}
-      <div className="absolute rounded-full top-20 left-20 w-96 h-96 bg-blue-500/20 blur-3xl animate-pulse" />
-      <div className="absolute delay-1000 rounded-full bottom-20 right-20 w-96 h-96 bg-purple-500/20 blur-3xl animate-pulse" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-3xl" />
+      {/* Gradient Orbs - Static for performance */}
+      <div className="absolute rounded-full top-20 left-20 w-96 h-96 bg-blue-500/10 blur-3xl" />
+      <div className="absolute rounded-full bottom-20 right-20 w-96 h-96 bg-purple-500/10 blur-3xl" />
 
-      {/* Floating Dots - Reduced for better performance */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            animate={{
-              y: [0, -100, 0],
-              opacity: [0.3, 0.7, 0.3],
-            }}
-            transition={{
-              duration: 8 + Math.random() * 4,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: "easeInOut",
-            }}
-            className="absolute w-2 h-2 rounded-full shadow-lg bg-gradient-to-r from-blue-400 to-purple-400 shadow-blue-500/50"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
-      </div>
+      {/* Minimal decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" />
 
       {/* Main Content - Split Layout */}
       <div className="container relative z-10 px-4 mx-auto sm:px-6 lg:px-8">

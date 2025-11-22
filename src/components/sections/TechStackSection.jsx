@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -134,7 +134,7 @@ const technologies = [
   },
 ];
 
-const TechBubble = ({ tech, index, isAnyHovered, setAnyHovered }) => {
+const TechBubble = forwardRef(({ tech, index, isAnyHovered, setAnyHovered }, ref) => {
   const [isHovered, setIsHovered] = useState(false);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const cardRef = useRef(null);
@@ -142,13 +142,9 @@ const TechBubble = ({ tech, index, isAnyHovered, setAnyHovered }) => {
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -10;
-    const rotateY = ((x - centerX) / centerX) * 10;
-    setRotation({ x: rotateX, y: rotateY });
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -20;
+    setRotation({ x: y, y: x });
   };
 
   const handleMouseEnter = () => {
@@ -327,7 +323,9 @@ const TechBubble = ({ tech, index, isAnyHovered, setAnyHovered }) => {
       </div>
     </motion.div>
   );
-};
+});
+
+TechBubble.displayName = "TechBubble";
 
 const TechStackSection = () => {
   const sectionRef = useRef(null);
@@ -340,18 +338,17 @@ const TechStackSection = () => {
     filter === "All" ? technologies : technologies.filter((tech) => tech.category === filter);
 
   useEffect(() => {
-    // Floating animation for background particles
-    gsap.to(".floating-particle", {
-      y: "random(-20, 20)",
-      x: "random(-20, 20)",
-      duration: "random(2, 4)",
+    const particles = document.querySelectorAll(".floating-particle");
+    if (particles.length === 0) return;
+
+    gsap.to(particles, {
+      y: "random(-10, 10)",
+      x: "random(-10, 10)",
+      duration: 3,
       repeat: -1,
       yoyo: true,
       ease: "sine.inOut",
-      stagger: {
-        amount: 1.5,
-        from: "random",
-      },
+      stagger: 0.5,
     });
   }, []);
 
@@ -362,12 +359,12 @@ const TechStackSection = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(139,92,246,0.1),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(6,182,212,0.1),transparent_50%)]" /> */}
 
-      {/* Floating particles */}
+      {/* Minimal particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
+        {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 rounded-full floating-particle bg-cyan-400/30"
+            className="absolute w-1 h-1 rounded-full floating-particle bg-cyan-400/20"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,

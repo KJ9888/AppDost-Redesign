@@ -253,20 +253,16 @@ const ProjectsSection = ({ floatingCTARef }) => {
 
     gsap.fromTo(
       titleElement,
-      {
-        opacity: 0,
-        y: 50,
-      },
+      { opacity: 0, y: 30 },
       {
         scrollTrigger: {
           trigger: titleElement,
           start: "top 85%",
-          toggleActions: "play none none none",
+          once: true,
         },
         opacity: 1,
         y: 0,
-        duration: 1,
-        ease: "power3.out",
+        duration: 0.8,
       }
     );
   }, []);
@@ -280,24 +276,18 @@ const ProjectsSection = ({ floatingCTARef }) => {
       if (!section) return;
 
       const rect = section.getBoundingClientRect();
-      const sectionHeight = rect.height;
-      const viewportHeight = window.innerHeight;
-
-      // Show popup when user scrolls 40% into the section
-      const scrolledIntoSection = viewportHeight - rect.top;
-      const scrollPercentage = (scrolledIntoSection / sectionHeight) * 100;
+      const scrollPercentage = ((window.innerHeight - rect.top) / rect.height) * 100;
 
       if (scrollPercentage > 40 && !hasShownPopup) {
         setShowPopup(true);
         setHasShownPopup(true);
-        // Hide the floating button when popup shows
         if (floatingCTARef?.current) {
           floatingCTARef.current.hideButton();
         }
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [hasShownPopup, floatingCTARef]);
 
